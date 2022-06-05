@@ -11,7 +11,7 @@ class CreateTodoController {
     const todo = await createTodoService.execute({
       deadline,
       description,
-      ownerId: id,
+      owner_id: id,
     });
 
     return response.status(201).json(todo);

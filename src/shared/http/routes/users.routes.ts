@@ -7,6 +7,4 @@ const createUserController = new CreateUserController();
 
 usersRoutes.post("/", createUserController.handle);
 
-// usersRoutes.use(ensureAuthenticated);
-
 export { usersRoutes };

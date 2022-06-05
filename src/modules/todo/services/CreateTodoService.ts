@@ -13,12 +13,12 @@ class CreateTodoService {
   async execute({
     deadline,
     description,
-    ownerId,
+    owner_id,
   }: ICreateTodoDTO): Promise<Todo> {
-    return await this.todosRepository.create({
+    return await this.todosRepository.save({
       deadline,
       description,
-      ownerId,
+      owner_id,
     });
   }
 }

@@ -1,4 +1,3 @@
-import { connect } from "http2";
 import { createConnection } from "typeorm";
 import connectionOptions from "../../config/ormconfig";
 

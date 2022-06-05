@@ -35,6 +35,8 @@ class Todo {
 
   @UpdateDateColumn()
   updated_at: Date;
+
+  isLate?: Boolean;
 }
 
 export { Todo };
