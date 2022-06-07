@@ -5,6 +5,7 @@ import { ICreateTodoDTO } from "../dtos/ICreateTodoDTO";
 import { Todo } from "../infra/typeorm/entities/Todo";
 import { ITodosRepository } from "../repositories/ITodosRepository";
 import { IPagination } from "../interfaces/IPagination";
+import { ITotalRows } from "../interfaces/ITotalRows";
 dayjs.extend(utc);
 
 @injectable()
@@ -14,22 +15,14 @@ class ListAllDelayedTodosService {
     private todosRepository: ITodosRepository
   ) {}
 
-  async execute(pagination?: IPagination): Promise<Todo[]> {
-    const todos = await this.todosRepository.findAll(pagination);
+  async execute(pagination?: IPagination): Promise<[Todo[], ITotalRows]> {
+    const [todos] = await this.todosRepository.findDelayedTodos(pagination);
 
-    const dateNow = dayjs().format("MM/DD/YYYY");
-    const delayedTodos: Todo[] = [];
     for (const todo of todos) {
-      const todoDeadline = dayjs(todo.deadline).format("MM/DD/YYYY");
-      const delay = dayjs(todoDeadline).diff(dateNow, "days");
-
-      if (delay <= -1) {
-        todo.isLate = true;
-        delayedTodos.push(todo);
-      }
+      todo.isLate = true;
     }
 
-    return delayedTodos;
+    return [todos, { totalRows: todos.length }];
   }
 }
 

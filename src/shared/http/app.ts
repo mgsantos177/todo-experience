@@ -1,7 +1,8 @@
 import express, { NextFunction, Request, Response } from "express";
 import "express-async-errors";
 import "reflect-metadata";
-import "../typeorm";
+import "dotenv/config";
+import "../infra/typeorm";
 import "../container";
 import cors from "cors";
 import { AppError } from "../errors/AppError";

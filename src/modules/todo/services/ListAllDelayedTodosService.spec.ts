@@ -39,14 +39,16 @@ describe("List all delayed Todos", () => {
 
   it("should be able to list all delayed todos", async () => {
     const todo: ICreateTodoDTO = {
-      deadline: dayjs().subtract(2, "day").toDate(),
+      deadline: dayjs().subtract(5, "day").toDate(),
       description: "Teste delayed todo description",
       owner_id: user.id,
     };
 
-    const createTodo = await createTodoService.execute(todo);
+    await createTodoService.execute(todo);
 
-    const delayedTodos = await delayedTodosServices.execute();
+    const [delayedTodos, rows] = await delayedTodosServices.execute();
+
+    expect(rows.totalRows).toEqual(1);
 
     expect(delayedTodos[0].isLate).toEqual(true);
   });
@@ -56,12 +58,13 @@ describe("List all delayed Todos", () => {
       deadline: new Date(),
       description: "Teste not delayed todo description",
       owner_id: user.id,
+      status: "Completed",
     };
 
-    const createTodo = await createTodoService.execute(todo);
+    await createTodoService.execute(todo);
 
-    const delayedTodos = await delayedTodosServices.execute();
-
+    const [delayedTodos, rows] = await delayedTodosServices.execute();
+    expect(rows.totalRows).toEqual(0);
     expect(delayedTodos.length).toEqual(0);
   });
 });

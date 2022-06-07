@@ -1,14 +1,12 @@
-import { v4 as uuidV4 } from "uuid";
 import dayjs from "dayjs";
-import { AppError } from "../../../shared/errors/AppError";
 import { ICreateUserDTO } from "../../users/dtos/ICreateUserDTO";
 import { User } from "../../users/infra/typeorm/entities/User";
 import { UserRepositoryInMemory } from "../../users/repositories/in-memory/UserRepositoryInMemory";
 import { CreateUserService } from "../../users/services/CreateUserService";
 import { ICreateTodoDTO } from "../dtos/ICreateTodoDTO";
 import { TodosRepositoryInMemory } from "../repositories/in-memory/TodosRepositoryInMemory";
-import { ListMyTodosService } from "./ListMyTodosService";
 import { CreateTodoService } from "./CreateTodoService";
+import { ListMyTodosService } from "./ListMyTodosService";
 
 let createTodoService: CreateTodoService;
 let todosRepositoryInMemory: TodosRepositoryInMemory;
@@ -40,6 +38,7 @@ describe("List my Todos", () => {
       deadline: dayjs().subtract(2, "day").toDate(),
       description: "Teste delayed todo description",
       owner_id: user.id,
+      status: "Completed",
     };
 
     const todo2: ICreateTodoDTO = {

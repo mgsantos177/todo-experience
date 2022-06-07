@@ -37,10 +37,17 @@ class AuthenticateUserService {
       throw new AppError("Email or password incorrect!", 401);
     }
 
-    const token = sign({}, auth.secret_token, {
-      subject: user.id,
-      expiresIn: auth.expires_in_token,
-    });
+    const token = sign(
+      {
+        isAdmin: user.isAdmin,
+        email: user.email,
+      },
+      auth.secret_token,
+      {
+        subject: user.id,
+        expiresIn: auth.expires_in_token,
+      }
+    );
 
     const tokenReturn: IResponse = {
       token,

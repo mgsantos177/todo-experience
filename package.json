@@ -8,7 +8,7 @@
     "start": "ts-node src/index.ts",
     "build": "tsc",
     "typeorm": "ts-node-dev ./node_modules/typeorm/cli.js --config src/config/ormconfig.ts",
-    "seed:admin": "ts-node-dev src/shared/typeorm/seed/admin.ts",
+    "seed:admin": "ts-node-dev src/shared/infra/typeorm/seed/admin.ts",
     "test": "jest --runInBand --detectOpenHandles"
   },
   "dependencies": {

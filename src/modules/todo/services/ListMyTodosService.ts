@@ -21,6 +21,10 @@ class ListMyTodosService {
       const todoDeadline = dayjs(todo.deadline).format("MM/DD/YYYY");
       const delay = dayjs(todoDeadline).diff(dateNow, "days");
 
+      if (todo.status === "Completed") {
+        continue;
+      }
+
       if (delay <= -1) {
         todo.isLate = true;
       }

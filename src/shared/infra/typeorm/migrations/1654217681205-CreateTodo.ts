@@ -19,7 +19,7 @@ export class CreateTodo1654217681205 implements MigrationInterface {
           },
           {
             name: "deadline",
-            type: "timestamp",
+            type: "date",
           },
           {
             name: "status",

@@ -3,6 +3,7 @@ import { AppError } from "../../../../../shared/errors/AppError";
 import { ICreateTodoDTO } from "../../../dtos/ICreateTodoDTO";
 import { IUpdateTodoDTO } from "../../../dtos/IUpdateTodoDTO";
 import { IPagination } from "../../../interfaces/IPagination";
+import { ITotalRows } from "../../../interfaces/ITotalRows";
 import { ITodosRepository } from "../../../repositories/ITodosRepository";
 import { Todo } from "../entities/Todo";
 
@@ -16,14 +17,47 @@ class TodosRepository implements ITodosRepository {
     return await this.repository.findOne({ id });
   }
 
-  async findAll({ skip, take }: IPagination): Promise<Todo[]> {
+  async findAll({ skip, take }: IPagination): Promise<[Todo[], number]> {
     const todos = await this.repository
       .createQueryBuilder("todo")
       .leftJoinAndSelect("todo.user", "user")
-      .select(["todo.id", "todo.description", "todo.deadline", "user.email"])
+      .select([
+        "todo.id",
+        "todo.description",
+        "todo.deadline",
+        "todo.status",
+        "todo.updated_at",
+        "user.email",
+      ])
       .skip(skip)
       .take(take)
-      .getMany();
+      .getManyAndCount();
+
+    return todos;
+  }
+
+  async findDelayedTodos({
+    skip,
+    take,
+  }: IPagination): Promise<[Todo[], number]> {
+    const today = new Date().toISOString().split("T")[0].toString();
+
+    const todos = await this.repository
+      .createQueryBuilder("todo")
+      .leftJoinAndSelect("todo.user", "user")
+      .select([
+        "todo.id",
+        "todo.description",
+        "todo.deadline",
+        "todo.status",
+        "todo.updated_at",
+        "user.email",
+      ])
+      .where(`todo.deadline < :today AND Status != 'Completed'`, { today })
+      .skip(skip)
+      .take(take)
+      .getManyAndCount();
+
     return todos;
   }
 

@@ -27,7 +27,7 @@ todosRoutes.put("/:id", updateTodoController.handle);
 todosRoutes.patch("/:id", completeTodoController.handle);
 
 todosRoutes.use(ensureAdmin);
-todosRoutes.get("/all", listAllTodosController.handle);
-todosRoutes.get("/all/delayed", listAllDelayedTodosController.handle);
+todosRoutes.get("/admin/all", listAllTodosController.handle);
+todosRoutes.get("/admin/delayed", listAllDelayedTodosController.handle);
 
 export { todosRoutes };

@@ -51,8 +51,8 @@ describe("List all Todos", () => {
     await createTodoService.execute(todo);
     await createTodoService.execute(todo2);
 
-    const delayedTodos = await listAllTodosServices.execute();
-
-    expect(delayedTodos.length).toEqual(2);
+    const [todos, rows] = await listAllTodosServices.execute();
+    expect(rows.totalRows).toEqual(2);
+    expect(todos.length).toEqual(2);
   });
 });

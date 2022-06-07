@@ -17,7 +17,7 @@ class Todo {
   @Column()
   description: string;
 
-  @Column()
+  @Column({ type: "date" })
   deadline: Date;
 
   @Column({ default: "Pending" })
