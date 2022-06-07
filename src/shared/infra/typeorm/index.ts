@@ -1,11 +1,11 @@
-import { createConnection } from "typeorm";
+import { createConnection, getConnectionOptions } from "typeorm";
 import connectionOptions from "../../../config/ormconfig";
 
 createConnection(connectionOptions)
-  .then(() => {
+  .then(async () => {
     console.log("Postgres: Connected!");
   })
-  .catch((error) => {
+  .catch(async (error) => {
     console.log("Postgres: Failed to connect!");
     console.log(error);
   });
