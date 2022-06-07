@@ -1,4 +1,4 @@
-import { createConnection, getConnectionOptions } from "typeorm";
+import { createConnection } from "typeorm";
 import connectionOptions from "../../../config/ormconfig";
 
 createConnection(connectionOptions)
