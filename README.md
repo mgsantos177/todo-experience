@@ -44,3 +44,7 @@ Gerar arquivo de build e inicializar aplicação
 
 - [] Docker
 - [] Testes de integração
+
+## Observações
+- Collection criada a partir do Insomnia está dispónivel na pasta docs.
+
